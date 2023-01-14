@@ -40,10 +40,13 @@ public class chatClient {
 
     public static void main(String[] args) {
         chatClient client = new chatClient();
+        chatClient client2 = new chatClient();
         client.startConnection("127.0.0.1", 5000);
+        client2.startConnection("127.0.0.1", 5000);
         String responseString = client.sendMessage("hello server");
         System.out.println(responseString);
-        client.stop();
+        responseString = client2.sendMessage("hello server");
+        System.out.println(responseString);
     }
 
 }

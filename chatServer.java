@@ -2,22 +2,13 @@ import java.net.*;
 import java.io.*;
 
 public class chatServer{
-    private PrintWriter out;
-    private BufferedReader in;
-
+    private ServerSocket serverSocket;
     public void start(int port) {
-        try(ServerSocket serverSocket = new ServerSocket(port);) {
+        try {
+            serverSocket = new ServerSocket(port);
             System.out.println("Server Started");
             while(true){
-                Socket clientSocket = serverSocket.accept();
-                out = new PrintWriter(clientSocket.getOutputStream(),true);
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                String greeting = in.readLine();
-                if("hello server".equals(greeting)){
-                    out.println("hello client");
-                }else{
-                    out.println("unrecognised greeting");
-                }
+                new clientHandler(serverSocket.accept()).start();
             }
         } catch (IOException e) {
             System.out.println("Error starting server: " + e.getMessage());
@@ -27,11 +18,10 @@ public class chatServer{
 
     public void stop(){
         try {
-            in.close();
+            serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        out.close();
     }
 
     public static void main(String[] args) {
