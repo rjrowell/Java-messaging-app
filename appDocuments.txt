@@ -1,0 +1,42 @@
+The chatServer class is used to create a simple chat server. It uses the java.net package's ServerSocket class to create a server that listens on a specified port for incoming connections. Each incoming connection is handled by a new instance of the clientHandler class, which runs in its own thread. The chatServer class keeps track of all connected clients using a set of clientHandler objects.
+
+The chatServer class has the following methods:
+
+start(int port): This method starts the server and listens for incoming connections on the specified port. It creates a new instance of the clientHandler class for each incoming connection and adds it to the set of connected clients.
+
+stop(): This method stops the server and closes the ServerSocket.
+
+broadcast(String message): This method sends the specified message to all connected clients.
+
+main(String[] args): This method creates an instance of the chatServer class and starts the server listening on port 5000.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+The clientHandler class is used to handle the communication between the server and a connected client. It is a subclass of Thread, which means that it can run in its own thread, separate from the main thread of the program. The clientHandler class has the following fields:
+
+username: A string representing the username of the connected client.
+out: A PrintWriter object used to send messages to the client.
+in: A BufferedReader object used to read messages from the client.
+clientSocket: A Socket object representing the connection to the client.
+server: An instance of the chatServer class, which is used to broadcast messages to all connected clients.
+The clientHandler class has the following methods:
+
+giveMessage(String message): This method sends the specified message to the connected client.
+
+run(): This method is called when the thread is started. It sets up the input and output streams for the connection to the client, reads messages from the client and broadcast the message recieved to all the client connected to the server.
+
+The clientHandler class uses the java.io package's IOException, PrintWriter, BufferedReader and InputStreamReader classes, and the java.net package's Socket class.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+The chatClient class is used to create a client that can connect to a chat server. It uses the java.net package's Socket class to create a socket connection to the server. The chatClient class has the following methods:
+
+startConnection(String ip,int port): This method starts a socket connection to the specified IP address and port. It also sets up the input and output streams for communication with the server.
+
+sendMessage(String msg): This method sends the specified message to the server and returns the response from the server.
+
+stop(): This method stops the connection to the server and closes the socket and input and output streams.
+
+main(String[] args): This method creates an instance of the chatClient class, starts a connection to a server
+
+The chatClient class uses the java.io package's IOException, PrintWriter, BufferedReader and InputStreamReader classes, and the java.net package's Socket class.
