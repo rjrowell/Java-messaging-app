@@ -5,7 +5,7 @@ import java.io.*;
 
 public class chatServer{
     private ServerSocket serverSocket;
-    private Set<clientHandler> setOfClients = new HashSet<>();
+    private Set<clientHandler> setOfClients = new HashSet<>();//TODO make sure clients are deleted when disconnect
     public void start(int port) {
         try {
             serverSocket = new ServerSocket(port);
