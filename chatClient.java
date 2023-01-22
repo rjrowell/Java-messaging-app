@@ -71,13 +71,52 @@ public class chatClient {
         return resp;
     }
 
+    public void run(){
+        Thread inputThread = new Thread(new inputThread());
+        Thread outputThread = new Thread(new outputThread());
+        inputThread.start();
+        outputThread.start();
+    }
+
     public static void main(String[] args) {
         chatClient client = new chatClient();
         client.startConnection("127.0.0.1", 5000);
-        System.out.println(client.sendMessage("Hello World"));
-        /*client.startConnection("127.0.0.1", 5000);
-        String resp = client.sendMessage("Hello World");
-        System.out.println(resp);*/
+        client.run();
+    }
+
+
+    //************************************************************************************************************** */
+    //Below are inner thread classes
+
+    class inputThread implements Runnable{  //gets messages from server and prints to client console
+        @Override
+        public void run(){
+            try {
+                while(true){
+                    String inputString = in.readLine();
+                    if(inputString != null){
+                        System.out.println(inputString);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class outputThread implements Runnable{//gets message from client and sends to server
+        @Override
+        public void run(){
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            try {
+                while(true){
+                    String outputString = br.readLine();
+                    out.println(outputString);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

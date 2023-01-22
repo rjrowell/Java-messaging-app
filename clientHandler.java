@@ -22,6 +22,7 @@ public class clientHandler extends Thread{
             out = new PrintWriter(clientSocket.getOutputStream(),true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             username = in.readLine();
+            out.println("SERVER CONNECTION STARTED");
             String inputLine;
             while((inputLine = in.readLine()) != null){
                 if(".".equals(inputLine)){
